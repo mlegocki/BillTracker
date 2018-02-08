@@ -17,14 +17,10 @@ class App extends Component {
   toggleDisplay() {
     this.state.displayPortal ? this.setState({ displayPortal: false }) : this.setState({ displayPortal: true });
   }
-
-  // save() {
-  //   chrome.storage.sync.set({ "yourBody": "myBody" }, function () {
-  //     //  A data saved callback omg so fancy
-  //   });
-  // }
-
   render() {
+    // chrome.storage.sync.set({'test': 'string'});
+    // console.log(chrome.storage);
+    // chrome.storage.sync.get(null, function (data) { console.info(data) });
     return (
       <div className="App">
         <header className="App-header">
