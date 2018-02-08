@@ -26,7 +26,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" />
-          <h1 className="App-title">Welcome to Bill Tracker</h1>
+          <h1 className="App-title">Welcome to Pay Time</h1>
         </header>
         <AddBill />
         <List />
