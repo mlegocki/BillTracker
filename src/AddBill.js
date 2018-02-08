@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Message, Header, Icon, Input, Radio } from 'semantic-ui-react';
+import { Button, Modal, Form, Message, Header, Icon, Input, Radio, Dropdown } from 'semantic-ui-react';
+import dates from './utils/client/dataList';
 
 class AddBill extends Component {
   constructor() {
     super();
     this.state = {
-      frequency: ''
+      frequency: '',
+      specificDate: 0,
+      displaySuccess: false
     }
     this.frequencyChange = this.frequencyChange.bind(this);
+    this.specificChange = this.specificChange.bind(this);
+    this.toggleSuccess = this.toggleSuccess.bind(this);
   }
   frequencyChange(e, { value }) {
     this.setState({ frequency: value });
   }
+  specificChange(e, { value }) {
+    this.setState({ specificDate: value })
+  }
+  toggleSuccess() {
+    this.state.displaySuccess ? this.setState({ displaySuccess: false }) : this.setState({ displaySuccess: true })
+  }
   render() {
+    console.log(this.state);
     return (
       <Modal
         trigger=
         {
           <Button color='purple'>
             Add Bill
-      </Button>
+          </Button>
         }
         basic size='small'
       >
@@ -28,25 +40,30 @@ class AddBill extends Component {
           <p>
             Enter your information below!
         </p>
-          <Form inverted success>
-            <Form.Field>
-              <label>Bill Name</label>
-              <input placeholder='Enter your bill here...' />
-            </Form.Field>
-            <Form.Field>
-              <label>Company Bill Belongs To</label>
-              <input placeholder='Enter your bill here...' />
-            </Form.Field>
+          <Form inverted success={this.state.displaySuccess}>
             <Form.Group>
-              <label>Date</label>
-              <Form.Field control={Radio} label='Specific Date Every Week' value='365' checked={this.state.frequency === '365'} onChange={this.frequencyChange} />
-              <Form.Field control={Radio} label='Specific Date Every Month' value='365' checked={this.state.frequency === '365'} onChange={this.frequencyChange} />
-              <Form.Field control={Radio} label='Specific Date Every Year' value='365' checked={this.state.frequency === '365'} onChange={this.frequencyChange} />
-              <Form.Field control={Radio} label='Daily' value='1' checked={this.state.frequency === '1'} onChange={this.frequencyChange} />
-              <Form.Field control={Radio} label='Weekly' value='7' checked={this.state.frequency === '7'} onChange={this.frequencyChange} />
-              <Form.Field control={Radio} label='Monthly (30 Days)' value='30' checked={this.state.frequency === '30'} onChange={this.frequencyChange} />
-              <Form.Field control={Radio} label='Annually' value='365' checked={this.state.frequency === '365'} onChange={this.frequencyChange} />
+              <Form.Field width={10}>
+                <label>Bill Name (e.g. "Electric")</label>
+                <input placeholder='Enter your bill here...' />
+              </Form.Field>
+              <Form.Field width={6}>
+                <label>Company Owed To</label>
+                <input placeholder='Enter the company name here...' />
+              </Form.Field>
             </Form.Group>
+            <Form.Group className={'frequency-container'}>
+              <label>
+                Choose Frequency of Payments
+              </label>
+              <Form.Field control={Radio} label='Every Month' value='m' checked={this.state.frequency === 'm'} onChange={this.frequencyChange} width={4} />
+              <Form.Field control={Radio} label='Every Year' value='y' checked={this.state.frequency === 'y'} onChange={this.frequencyChange} width={4} />
+              <Form.Field control={Radio} label='Every Week' value='w' checked={this.state.frequency === 'w'} onChange={this.frequencyChange} width={4} />
+              <Form.Field control={Radio} label='Everyday' value='d' checked={this.state.frequency === 'd'} onChange={this.frequencyChange} width={4} />
+            </Form.Group>
+            {
+              (this.state.frequency === 'w' || this.state.frequency === 'm' || this.state.frequency === 'y') &&
+              <Dropdown placeholder='Select Date' fluid search selection options={dates} onChange={this.specificChange} />
+            }
             <Message
               success
               header='Form Completed'
@@ -55,11 +72,18 @@ class AddBill extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button basic color='red' inverted>
-            <Icon name='remove' /> No
+          <Button
+            inverted
+            basic color='red'
+          >
+            <Icon name='remove' /> Close
         </Button>
-          <Button color='green' inverted>
-            <Icon name='checkmark' /> Yes
+          <Button
+            inverted
+            color='green'
+            onClick={this.toggleSuccess}
+          >
+            <Icon name='checkmark' /> Submit
         </Button>
         </Modal.Actions>
       </Modal>
