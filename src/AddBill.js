@@ -30,7 +30,6 @@ class AddBill extends Component {
     return (
       <Modal
         className={'add-bill-modal-container'}
-        style={{ width: 1300}}
         trigger=
         {
           <Button color='purple'>
@@ -44,8 +43,8 @@ class AddBill extends Component {
           <div className={'add-bill-calendar-container'}>
             {
               <InfiniteCalendar
-                width={10}
-                height={200}
+                width={500}
+                height={300}
                 selected={new Date()}
                 displayOptions={dispOptions}
                 onSelect={date => {
@@ -63,20 +62,19 @@ class AddBill extends Component {
               Enter your information below!
             </p>
             <Form inverted success={this.state.displaySuccess}>
-              <Form.Group>
-                <Form.Field width={10}>
-                  <label>Bill Name (e.g. "Electric")</label>
-                  <input placeholder='Enter your bill here...' />
-                </Form.Field>
-                <Form.Field width={6}>
-                  <label>Company Owed To</label>
-                  <input placeholder='Enter the company name here...' />
-                </Form.Field>
-              </Form.Group>
+              <Form.Field width={10}>
+                <label>Bill Name (e.g. "Electric")</label>
+                <input placeholder='Enter your bill here...' />
+              </Form.Field>
+              <Form.Field width={6}>
+                <label>Company Owed To</label>
+                <input placeholder='Enter the company name here...' />
+              </Form.Field>
+
               <Form.Group className={'frequency-container'}>
-                <label>
+                <label className='add-bill-frequency-label'>
                   Choose Frequency of Payments
-              </label>
+                </label>
                 <Form.Field control={Radio} label='Every Month' value='m' checked={this.state.frequency === 'm'} onChange={this.frequencyChange} width={4} />
                 <Form.Field control={Radio} label='Every Year' value='y' checked={this.state.frequency === 'y'} onChange={this.frequencyChange} width={4} />
                 <Form.Field control={Radio} label='Every Week' value='w' checked={this.state.frequency === 'w'} onChange={this.frequencyChange} width={4} />
