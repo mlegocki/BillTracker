@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Message, Header, Icon, Input, Radio, Dropdown } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, } from 'semantic-ui-react';
 import BillForm from './AddBill-Form';
 import Calendar from './AddBill-Calendar';
 
@@ -33,6 +33,7 @@ class AddBill extends Component {
   }
   render() {
     const { displayModal } = this.props
+    console.log(this.state);
     return (
       <Modal
         open={displayModal}
@@ -48,10 +49,10 @@ class AddBill extends Component {
           <BillForm
             displaySuccess={this.state.displaySuccess}
             frequency={this.state.frequency}
-            setFrequency={this.setFrequency}
             toggleCalendar={this.toggleCalendar}
+            setFrequency={this.setFrequency}
           />
-          {
+          {(this.state.displayCalendar) &&
             <Calendar
               displayCalendar={this.state.displayCalendar}
               specificDate={this.state.specificDate}

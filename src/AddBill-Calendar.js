@@ -1,38 +1,34 @@
 import React from 'react';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import InfiniteCalendar from 'react-infinite-calendar';
-import { dispOptions, dates } from './utils/client/addBillUtils';
+import 'react-infinite-calendar/styles.css';
+import { dispOptions } from './utils/client/addBillUtils';
 
 const Calendar = (props) => {
-  const { displayCalendar, setDate, toggleCalendar, specificChange } = props
+  const { displayCalendar, setDate, toggleCalendar } = props
   return (
-    <div>
-      <Modal
-        open={displayCalendar}
-        basic size='small'
-      >
-        <Modal.Header>Select a Date</Modal.Header>
-        <Modal.Content>
-          <InfiniteCalendar
-            width={500}
-            height={300}
-            selected={new Date()}
-            displayOptions={dispOptions}
-            onSelect={date => {
-              console.log(Number(date.toString().slice(8, 11)));
-            }}
-          />
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            basic color='green'
-            onClick={toggleCalendar}
-          >
-            <Icon name='arrow left' />
-          </Button>
-        </Modal.Actions>
-      </Modal>
-    </div>
+    <Modal
+      open={displayCalendar}
+      basic size='small'
+    >
+      <Modal.Header>Select a Date</Modal.Header>
+      <InfiniteCalendar
+        width={720}
+        height={350}
+        displayOptions={dispOptions}
+        onSelect={date => {
+          setDate(Number(date.toString().slice(8, 11)));
+        }}
+      />
+      <Modal.Actions>
+        <Button
+          basic color='green'
+          onClick={toggleCalendar}
+        >
+          <Icon name='arrow left' />
+        </Button>
+      </Modal.Actions>
+    </Modal>
   );
 }
 

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Modal, Form, Message, Radio } from 'semantic-ui-react';
+import { Form, Message, Radio } from 'semantic-ui-react';
 
 const BillForm = (props) => {
   const { displaySuccess, frequency, setFrequency, toggleCalendar } = props
   return (
-    <Form inverted success={this.displaySuccess}
+    <Form inverted success={displaySuccess}
     >
-      <Form.Field width={10}>
+      <Form.Field>
         <label>Bill Name (e.g. "Electric")</label>
         <input placeholder='Enter your bill here...' />
       </Form.Field>
-      <Form.Field width={6}>
+      <Form.Field>
         <label>Company Owed To</label>
         <input placeholder='Enter the company name here...' />
       </Form.Field>
@@ -24,10 +24,9 @@ const BillForm = (props) => {
           checked={frequency === 'm'}
           onChange={
             () => {
-              this.setFrequency('m');
-              this.toggleCalendar();
+              setFrequency('m');
+              toggleCalendar();
             }}
-          width={4}
         />
         <Form.Field
           control={Radio}
@@ -36,10 +35,9 @@ const BillForm = (props) => {
           checked={frequency === 'y'}
           onChange={
             () => {
-              this.setFrequency('y');
-              this.toggleCalendar();
+              setFrequency('y');
+              toggleCalendar();
             }}
-          width={4}
         />
         <Form.Field
           control={Radio}
@@ -48,21 +46,19 @@ const BillForm = (props) => {
           checked={frequency === 'w'}
           onChange={
             () => {
-              this.setFrequency('w');
-              this.toggleCalendar();
+              setFrequency('w');
+              toggleCalendar();
             }}
-          width={4}
         />
         <Form.Field
           control={Radio}
           label='Everyday'
           value='d'
           checked={frequency === 'd'}
-          onChange={this.setFrequency}
-          width={4}
+          onChange={setFrequency}
         />
       </Form.Group>
-      <Form.Field width={6}>
+      <Form.Field>
         <label>Start Date of Month</label>
         <input placeholder='Enter the company name here...' />
       </Form.Field>
