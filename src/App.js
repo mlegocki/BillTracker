@@ -10,12 +10,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      displayPortal: false
+      displayModal: false
     }
     this.toggleDisplay = this.toggleDisplay.bind(this);
   }
   toggleDisplay() {
-    this.state.displayPortal ? this.setState({ displayPortal: false }) : this.setState({ displayPortal: true });
+    this.state.displayModal ? this.setState({ displayModal: false }) : this.setState({ displayModal: true });
   }
   render() {
     // chrome.storage.sync.set({'test': 'string'});
@@ -28,7 +28,10 @@ class App extends Component {
           <img src={logo} className="App-logo" />
           <h1 className="App-title">Welcome to Pay Time</h1>
         </header>
-        <AddBill />
+        <AddBill displayModal={this.state.displayModal} />
+        <Button color='purple' onClick={this.toggleDisplay}>
+          Add Bill Reminder
+        </Button>
         <List />
       </div>
     );

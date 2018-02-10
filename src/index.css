@@ -8,33 +8,3 @@ body {
 
 /*******ADD BILL MODAL*******/
 
-.add-bill-modal-container {
-  display: flex;
-  align-items: flex-start;
-  margin: 0px;
-  width: 100%;
-}
-
-.add-bill-form-container{
-  float: left;
-  float: top;
-  width: 65%;
-  height: 100%;
-}
-
-.add-bill-calendar-container{
-  float: right;
-  width: 35%;
-  height: 100%;
-}
-
-label.add-bill-frequency-label {
-  margin-bottom: 15px;
-}
-
-.frequency-container{
-  display: flex;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
