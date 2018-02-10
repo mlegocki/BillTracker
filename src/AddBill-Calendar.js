@@ -13,8 +13,8 @@ const Calendar = (props) => {
     >
       <Modal.Header>Select a Date</Modal.Header>
       <InfiniteCalendar
-        width={720}
-        height={350}
+        width={400}
+        height={250}
         displayOptions={dispOptions}
         onSelect={date => {
           setDate(Number(date.toString().slice(8, 11)));

@@ -1,4 +1,3 @@
-/* global chrome */
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
 import AddBill from './AddBill';
@@ -18,10 +17,6 @@ class App extends Component {
     this.state.displayModal ? this.setState({ displayModal: false }) : this.setState({ displayModal: true });
   }
   render() {
-    // chrome.storage.sync.set({'test': 'string'});
-    // console.log(chrome.storage);
-    // chrome.storage.sync.get(null, function (data) { console.info(data) });
-
     return (
       <div className="App">
         <header className="App-header">

@@ -1,26 +1,43 @@
 import React from 'react';
-import { Form, Message, Radio } from 'semantic-ui-react';
+import { Form, Input, Message, Radio } from 'semantic-ui-react';
 
 const BillForm = (props) => {
-  const { displaySuccess, frequency, setFrequency, toggleCalendar } = props
+  const {
+    billName,
+    companyOwed,
+    frequency,
+    displaySuccess,
+
+    setBillName,
+    setCompanyOwed,
+    setFrequency,
+    toggleCalendar } = props
+
   return (
     <Form inverted success={displaySuccess}
     >
-      <Form.Field>
-        <label>Bill Name (e.g. "Electric")</label>
-        <input placeholder='Enter your bill here...' />
+      <Form.Field required>
+        <label>Bill Type (e.g. "Electric")</label>
+        <Input
+          placeholder='Enter your bill type here...'
+          onChange={setBillName}
+          value={billName}
+        />
       </Form.Field>
-      <Form.Field>
+      <Form.Field required>
         <label>Company Owed To</label>
-        <input placeholder='Enter the company name here...' />
+        <Input
+          placeholder='Enter the company name here...'
+          onChange={setCompanyOwed}
+          value={companyOwed}
+        />
       </Form.Field>
-
-      <Form.Group>
+      <Form.Group required>
         <label>Choose Frequency of Payments</label>
         <Form.Field
           control={Radio}
           label='Every Month'
-          value='m'
+          value={frequency}
           checked={frequency === 'm'}
           onChange={
             () => {
@@ -31,7 +48,7 @@ const BillForm = (props) => {
         <Form.Field
           control={Radio}
           label='Every Year'
-          value='y'
+          value={frequency}
           checked={frequency === 'y'}
           onChange={
             () => {
@@ -42,7 +59,7 @@ const BillForm = (props) => {
         <Form.Field
           control={Radio}
           label='Every Week'
-          value='w'
+          value={frequency}
           checked={frequency === 'w'}
           onChange={
             () => {
@@ -53,15 +70,11 @@ const BillForm = (props) => {
         <Form.Field
           control={Radio}
           label='Everyday'
-          value='d'
+          value={frequency}
           checked={frequency === 'd'}
           onChange={setFrequency}
         />
       </Form.Group>
-      <Form.Field>
-        <label>Start Date of Month</label>
-        <input placeholder='Enter the company name here...' />
-      </Form.Field>
       <Message
         success
         header='Form Completed'
