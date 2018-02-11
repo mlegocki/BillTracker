@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Icon, Checkbox, Button } from 'semantic-ui-react'
 
 const ListBill = (props) => {
-  const { billList, deleteBill, toggleEditBillDisplay } = props;
+  const { billList, deleteBill, updateBillList, toggleEditBillDisplay } = props;
   return (
     <div>
       <Table>
@@ -50,7 +50,11 @@ const ListBill = (props) => {
                   </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button onClick={() => deleteBill(bill)}>
+                  <Button onClick={() => {
+                    deleteBill(bill);
+                    updateBillList();
+                  }}
+                  >
                     <Icon name='delete calendar' /> Delete
                   </Button>
                 </Table.Cell>

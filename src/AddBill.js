@@ -4,6 +4,8 @@ import { Button, Modal, Header, Icon, } from 'semantic-ui-react';
 import BillForm from './AddBill-Form';
 import Calendar from './AddBill-Calendar';
 
+// import { setBillType, setCompanyOwed, setFrequency, setDate, toggleCalendar, toggleSuccess, handleSubmit } from './utilsAddBill'
+
 class AddBill extends Component {
   constructor() {
     super();
@@ -22,7 +24,9 @@ class AddBill extends Component {
 
     this.toggleCalendar = this.toggleCalendar.bind(this);
     this.toggleSuccess = this.toggleSuccess.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   setBillType(e, { value }) {
     this.setState({ billType: value });
   }
@@ -46,7 +50,7 @@ class AddBill extends Component {
       billType: '',
       companyOwed: '',
       frequency: '',
-      specificDate: '',
+      specificDate: 0,
     });
   }
   render() {

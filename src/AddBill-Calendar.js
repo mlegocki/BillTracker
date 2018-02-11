@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
-import { dispOptions } from './utils/client/addBillUtils';
+import { dispOptions } from './utils/client/calendarOptions';
 
 const Calendar = (props) => {
   const { displayCalendar, setDate, toggleCalendar } = props

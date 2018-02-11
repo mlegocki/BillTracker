@@ -8,6 +8,7 @@ export const deleteBill = function (billKey) {
   chrome.storage.sync.remove(billKey)
 }
 export const toggleAddBillDisplay = function () {
+  console.log(this.state);
   this.state.displayAddBill ? this.setState({ displayAddBill: false }) : this.setState({ displayAddBill: true });
 }
 export const toggleEditBillDisplay = function () {
