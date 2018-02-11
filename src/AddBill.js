@@ -4,19 +4,18 @@ import { Button, Modal, Header, Icon, } from 'semantic-ui-react';
 import BillForm from './AddBill-Form';
 import Calendar from './AddBill-Calendar';
 
-
 class AddBill extends Component {
   constructor() {
     super();
     this.state = {
-      billName: '',
+      billType: '',
       companyOwed: '',
       frequency: '',
-      specificDate: '',
+      specificDate: 0,
       displayCalendar: false,
       displaySuccess: false,
     }
-    this.setBillName = this.setBillName.bind(this);
+    this.setBillType = this.setBillType.bind(this);
     this.setCompanyOwed = this.setCompanyOwed.bind(this);
     this.setFrequency = this.setFrequency.bind(this);
     this.setDate = this.setDate.bind(this);
@@ -24,8 +23,8 @@ class AddBill extends Component {
     this.toggleCalendar = this.toggleCalendar.bind(this);
     this.toggleSuccess = this.toggleSuccess.bind(this);
   }
-  setBillName(e, { value }) {
-    this.setState({ billName: value });
+  setBillType(e, { value }) {
+    this.setState({ billType: value });
   }
   setCompanyOwed(e, { value }) {
     this.setState({ companyOwed: value });
@@ -44,19 +43,20 @@ class AddBill extends Component {
   }
   handleSubmit() {
     this.setState({
-      billName: '',
+      billType: '',
       companyOwed: '',
       frequency: '',
       specificDate: '',
     });
   }
   render() {
-    const { displayModal } = this.props
-    const { billName, companyOwed, frequency, specificDate } = this.state;
-    const formData = { billName, companyOwed, frequency, specificDate }
+    const { displayAddBill, toggleAddBillDisplay, updateBillList } = this.props
+    const { billType, companyOwed, frequency, specificDate } = this.state;
+    const billKey = billType + '_' + companyOwed;
+    const formData = { billType, companyOwed, frequency, specificDate }
     return (
       <Modal
-        open={displayModal}
+        open={displayAddBill}
         className={'add-bill-modal-container'}
         basic size='small'
       >
@@ -66,11 +66,11 @@ class AddBill extends Component {
             Enter your information below!
           </p>
           <BillForm
-            billName={billName}
+            billType={billType}
             companyOwed={companyOwed}
             frequency={frequency}
 
-            setBillName={this.setBillName}
+            setBillType={this.setBillType}
             setCompanyOwed={this.setCompanyOwed}
             displaySuccess={this.state.displaySuccess}
             toggleCalendar={this.toggleCalendar}
@@ -89,6 +89,7 @@ class AddBill extends Component {
           <Button
             inverted
             basic color='red'
+            onClick={toggleAddBillDisplay}
           >
             <Icon name='remove' /> Close
             </Button>
@@ -96,12 +97,13 @@ class AddBill extends Component {
             inverted
             color='green'
             onClick={() => {
-              chrome.storage.sync.set({ [this.state]: formData });
+              chrome.storage.sync.set({ [billKey]: formData });
               this.toggleSuccess();
               chrome.storage.sync.get(null, function (data) {
                 console.log(data);
               });
-              handleSubmit();
+              updateBillList();
+              this.handleSubmit();
             }}
           >
             <Icon name='checkmark' /> Submit
@@ -113,7 +115,3 @@ class AddBill extends Component {
 }
 
 export default AddBill;
-
-    // 
-    // console.log(chrome.storage);
-    // chrome.storage.sync.get(null, function (data) { console.info(data) });

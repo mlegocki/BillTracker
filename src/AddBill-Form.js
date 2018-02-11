@@ -3,12 +3,12 @@ import { Form, Input, Message, Radio } from 'semantic-ui-react';
 
 const BillForm = (props) => {
   const {
-    billName,
+    billType,
     companyOwed,
     frequency,
     displaySuccess,
 
-    setBillName,
+    setBillType,
     setCompanyOwed,
     setFrequency,
     toggleCalendar } = props
@@ -20,8 +20,8 @@ const BillForm = (props) => {
         <label>Bill Type (e.g. "Electric")</label>
         <Input
           placeholder='Enter your bill type here...'
-          onChange={setBillName}
-          value={billName}
+          onChange={setBillType}
+          value={billType}
         />
       </Form.Field>
       <Form.Field required>
@@ -78,7 +78,7 @@ const BillForm = (props) => {
       <Message
         success
         header='Form Completed'
-        content="You've successfully added a bill reminder!"
+        content="You've successfully added a bill reminder! Add more reminders if you'd like to!"
       />
     </Form>
   );

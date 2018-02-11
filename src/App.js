@@ -1,33 +1,46 @@
+/* global chrome */
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
-import AddBill from './AddBill';
-import List from './List';
 import logo from './Pay-Time.png';
 import './App.css';
+
+import { updateBillList, deleteBill, toggleAddBillDisplay, toggleEditBillDisplay } from './utils/client/app'
+
+import AddBill from './AddBill';
+import ListBill from './ListBill';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      displayModal: false
+      billList: {},
+      displayAddBill: false,
+      displayEditBill: false,
     }
-    this.toggleDisplay = this.toggleDisplay.bind(this);
+    this.toggleAddBillDisplay = toggleAddBillDisplay.bind(this);
+    this.toggleEditBillDisplay = toggleEditBillDisplay.bind(this);
+    this.updateBillList = updateBillList.bind(this);
   }
-  toggleDisplay() {
-    this.state.displayModal ? this.setState({ displayModal: false }) : this.setState({ displayModal: true });
+
+  componentDidMount() {
+    chrome.storage.sync.get(null, (data) => {
+      this.setState({ billList: data })
+    });
   }
+
   render() {
+    const { displayAddBill, billList } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" />
           <h1 className="App-title">Welcome to Pay Time</h1>
         </header>
-        <AddBill displayModal={this.state.displayModal} />
-        <Button color='purple' onClick={this.toggleDisplay}>
+        <ListBill billList={billList} deleteBill={deleteBill} toggleEditBillDisplay={toggleEditBillDisplay} />
+        <AddBill displayAddBill={displayAddBill} toggleAddBillDisplay={toggleAddBillDisplay} updateBillList={updateBillList} />
+        <Button color='purple' onClick={toggleAddBillDisplay}>
           Add Bill Reminder
         </Button>
-        <List />
       </div>
     );
   }
