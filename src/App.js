@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
 import logo from './Pay-Time.png';
 import './App.css';
-import AddBill from './AddBill';
+import Bill from './Bill';
+import EditBill from './EditBill';
 import ListBill from './ListBill';
 // import { updateBillList, deleteBill, toggleAddBillDisplay, toggleEditBillDisplay } from './utilsApp'
 
@@ -12,11 +13,10 @@ class App extends Component {
     super();
     this.state = {
       billList: {},
-      displayAddBill: false,
-      displayEditBill: false,
+      currentBill: {},
+      displayBill: false,
     }
-    this.toggleAddBillDisplay = this.toggleAddBillDisplay.bind(this);
-    this.toggleEditBillDisplay = this.toggleEditBillDisplay.bind(this);
+    this.toggleBillDisplay = this.toggleBillDisplay.bind(this);
     this.updateBillList = this.updateBillList.bind(this);
   }
 
@@ -34,24 +34,20 @@ class App extends Component {
   deleteBill(billKey) {
     chrome.storage.sync.remove(billKey)
   }
-  toggleAddBillDisplay() {
+  toggleBillDisplay() {
     this.state.displayAddBill ? this.setState({ displayAddBill: false }) : this.setState({ displayAddBill: true });
   }
-  toggleEditBillDisplay() {
-    this.state.displayEditBill ? this.setState({ displayEditBill: false }) : this.setState({ displayEditBill: true });
-  }
-
   render() {
-    const { displayAddBill, billList } = this.state;
+    const { billList, currentBill, displayAddBill, displayEditBill } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" />
           <h1 className="App-title">Welcome to Pay Time</h1>
         </header>
-        <ListBill billList={billList} deleteBill={this.deleteBill} updateBillList={this.updateBillList} toggleEditBillDisplay={this.toggleEditBillDisplay} />
-        <AddBill displayAddBill={displayAddBill} toggleAddBillDisplay={this.toggleAddBillDisplay} updateBillList={this.updateBillList} />
-        <Button color='purple' onClick={this.toggleAddBillDisplay}>
+        <ListBill billList={billList} deleteBill={this.deleteBill} updateBillList={this.updateBillList} />
+        <Bill displayBill={displayBill} currentBill={currentBill} toggleBillDisplay={this.toggleBillDisplay} updateBillList={this.updateBillList} />
+        <Button color='purple' onClick={this.toggleBillDisplay}>
           Add Bill Reminder
         </Button>
       </div>

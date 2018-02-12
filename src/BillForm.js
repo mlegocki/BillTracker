@@ -72,7 +72,7 @@ const BillForm = (props) => {
           label='Everyday'
           value={frequency}
           checked={frequency === 'd'}
-          onChange={setFrequency}
+          onChange={() => setFrequency('d')}
         />
       </Form.Group>
       <Message

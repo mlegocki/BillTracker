@@ -45,7 +45,7 @@ const ListBill = (props) => {
                   {billList[bill].specificDate}
                 </Table.Cell>
                 <Table.Cell>
-                  <Button onClick={toggleEditBillDisplay}>
+                  <Button onClick={() => toggleEditBillDisplay(bill)}>
                     <Icon name='edit' /> Edit
                   </Button>
                 </Table.Cell>

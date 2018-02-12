@@ -1,12 +1,12 @@
 /* global chrome */
 import React, { Component } from 'react';
 import { Button, Modal, Header, Icon, } from 'semantic-ui-react';
-import BillForm from './AddBill-Form';
-import Calendar from './AddBill-Calendar';
+import BillForm from './BillForm';
+import Calendar from './BillCalendar';
 
 // import { setBillType, setCompanyOwed, setFrequency, setDate, toggleCalendar, toggleSuccess, handleSubmit } from './utilsAddBill'
 
-class AddBill extends Component {
+class Bill extends Component {
   constructor() {
     super();
     this.state = {
@@ -26,6 +26,9 @@ class AddBill extends Component {
     this.toggleSuccess = this.toggleSuccess.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+// COMPONENT DID MOUNT TO CATCH IF 
+// THERE IS A CURRENT BILL BEING LOOKED AT 
 
   setBillType(e, { value }) {
     this.setState({ billType: value });
@@ -54,13 +57,13 @@ class AddBill extends Component {
     });
   }
   render() {
-    const { displayAddBill, toggleAddBillDisplay, updateBillList } = this.props
+    const { displayBill, toggleBillDisplay, updateBillList } = this.props
     const { billType, companyOwed, frequency, specificDate } = this.state;
     const billKey = billType + '_' + companyOwed;
     const formData = { billType, companyOwed, frequency, specificDate }
     return (
       <Modal
-        open={displayAddBill}
+        open={displayAddBill || displayEditBill}
         className={'add-bill-modal-container'}
         basic size='small'
       >
@@ -118,4 +121,4 @@ class AddBill extends Component {
   }
 }
 
-export default AddBill;
+export default Bill;
