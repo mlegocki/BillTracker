@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Icon, Checkbox, Button } from 'semantic-ui-react'
 
 const ListBill = (props) => {
-  const { billList, deleteBill, updateBillList, toggleEditBillDisplay } = props;
+  const { billList, deleteBill, updateBillList, toggleBillDisplay } = props;
   return (
     <div>
       <Table>
@@ -45,7 +45,7 @@ const ListBill = (props) => {
                   {billList[bill].specificDate}
                 </Table.Cell>
                 <Table.Cell>
-                  <Button onClick={() => toggleEditBillDisplay(bill)}>
+                  <Button onClick={() => toggleBillDisplay(billList[bill])}>
                     <Icon name='edit' /> Edit
                   </Button>
                 </Table.Cell>

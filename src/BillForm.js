@@ -11,7 +11,8 @@ const BillForm = (props) => {
     setBillType,
     setCompanyOwed,
     setFrequency,
-    toggleCalendar } = props
+    toggleCalendar
+  } = props
 
   return (
     <Form inverted success={displaySuccess}
@@ -22,6 +23,7 @@ const BillForm = (props) => {
           placeholder='Enter your bill type here...'
           onChange={setBillType}
           value={billType}
+          defaultValue={billType}
         />
       </Form.Field>
       <Form.Field required>
@@ -30,6 +32,7 @@ const BillForm = (props) => {
           placeholder='Enter the company name here...'
           onChange={setCompanyOwed}
           value={companyOwed}
+          defaultValue={companyOwed}
         />
       </Form.Field>
       <Form.Group required>

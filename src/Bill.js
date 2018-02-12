@@ -10,6 +10,7 @@ class Bill extends Component {
   constructor() {
     super();
     this.state = {
+      billKey: '',
       billType: '',
       companyOwed: '',
       frequency: '',
@@ -27,8 +28,10 @@ class Bill extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-// COMPONENT DID MOUNT TO CATCH IF 
-// THERE IS A CURRENT BILL BEING LOOKED AT 
+  componentWillReceiveProps(nextProps) {
+    const { billType, companyOwed, frequency, specificDate, billKey } = nextProps.currentBill;
+    this.setState({ billType, companyOwed, frequency, specificDate });
+  }
 
   setBillType(e, { value }) {
     this.setState({ billType: value });
@@ -50,21 +53,23 @@ class Bill extends Component {
   }
   handleSubmit() {
     this.setState({
+      billKey: '',
       billType: '',
       companyOwed: '',
       frequency: '',
       specificDate: 0,
     });
   }
+
   render() {
-    const { displayBill, toggleBillDisplay, updateBillList } = this.props
+    const { displayBill, deleteBill, toggleBillDisplay, updateBillList, currentBill } = this.props;
     const { billType, companyOwed, frequency, specificDate } = this.state;
     const billKey = billType + '_' + companyOwed;
-    const formData = { billType, companyOwed, frequency, specificDate }
+    const formData = { billKey, billType, companyOwed, frequency, specificDate };
+    console.log('CURRENT BILL RENDER:', currentBill);
     return (
       <Modal
-        open={displayAddBill || displayEditBill}
-        className={'add-bill-modal-container'}
+        open={displayBill}
         basic size='small'
       >
         <Header icon='add to calendar' content='Add a Bill Reminder' />
@@ -96,7 +101,7 @@ class Bill extends Component {
           <Button
             inverted
             basic color='red'
-            onClick={toggleAddBillDisplay}
+            onClick={() => toggleBillDisplay()}
           >
             <Icon name='remove' /> Close
             </Button>
@@ -105,12 +110,10 @@ class Bill extends Component {
             color='green'
             onClick={() => {
               chrome.storage.sync.set({ [billKey]: formData });
-              this.toggleSuccess();
-              chrome.storage.sync.get(null, function (data) {
-                console.log(data);
-              });
-              updateBillList();
+              if (Object.keys(currentBill)[0].length) updateBillList(currentBill[Object.keys(currentBill)[0]]);
+              else updateBillList();
               this.handleSubmit();
+              this.toggleSuccess();
             }}
           >
             <Icon name='checkmark' /> Submit
