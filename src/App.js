@@ -47,7 +47,7 @@ class App extends Component {
   updateBillList(billKey) {
     if (billKey) this.deleteBill(billKey);
     chrome.storage.sync.get(null, (data) => {
-      console.log(data);
+      console.log('New Data Entry:', data);
       this.setState({ billList: data })
     });
     this.setState({
@@ -61,7 +61,6 @@ class App extends Component {
     });
   }
   toggleBillDisplay(bill) {
-    console.log('TOGGLE INPUT:', bill)
     if (bill) this.setState({ currentBill: bill });
     this.state.displayBill ? this.setState({ displayBill: false }) : this.setState({ displayBill: true });
   }

@@ -29,7 +29,7 @@ class Bill extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { billType, companyOwed, frequency, specificDate, billKey } = nextProps.currentBill;
+    const { billKey, billType, companyOwed, frequency, specificDate } = nextProps.currentBill;
     this.setState({ billType, companyOwed, frequency, specificDate });
   }
 
@@ -66,7 +66,7 @@ class Bill extends Component {
     const { billType, companyOwed, frequency, specificDate } = this.state;
     const billKey = billType + '_' + companyOwed;
     const formData = { billKey, billType, companyOwed, frequency, specificDate };
-    console.log('CURRENT BILL RENDER:', currentBill);
+
     return (
       <Modal
         open={displayBill}
@@ -110,7 +110,7 @@ class Bill extends Component {
             color='green'
             onClick={() => {
               chrome.storage.sync.set({ [billKey]: formData });
-              if (Object.keys(currentBill)[0].length) updateBillList(currentBill[Object.keys(currentBill)[0]]);
+              if (currentBill[Object.keys(currentBill)[0]] !== formData.billKey) updateBillList(currentBill[Object.keys(currentBill)[0]]);
               else updateBillList();
               this.handleSubmit();
               this.toggleSuccess();
