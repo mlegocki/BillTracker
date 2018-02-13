@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Icon, Checkbox, Button } from 'semantic-ui-react'
 
-const ListBill = (props) => {
+const ListBillLarge = (props) => {
   const { billList, deleteBill, updateBillList, toggleBillDisplay } = props;
   return (
     <div>
@@ -67,4 +67,4 @@ const ListBill = (props) => {
   );
 }
 
-export default ListBill;
+export default ListBillLarge;
