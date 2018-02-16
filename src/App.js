@@ -67,7 +67,19 @@ class App extends Component {
     this.state.displayBill ? this.setState({ displayBill: false }) : this.setState({ displayBill: true });
   }
   toggleListSize() {
-    this.state.displaySmallList ? this.setState({ displaySmallList: false }) : this.setState({ displaySmallList: true });
+    if (this.state.displaySmallList) {
+      this.setState({ displaySmallList: false })
+      document.body.classList.add('master-container-false');
+      document.body.classList.remove('master-container-true');
+      document.getElementsByTagName("HTML")[0].classList.add('master-container-false');
+      document.getElementsByTagName("HTML")[0].classList.remove('master-container-true');
+    } else {
+      this.setState({ displaySmallList: true });
+      document.body.classList.add('master-container-true');
+      document.body.classList.remove('master-container-false');
+      document.getElementsByTagName("HTML")[0].classList.add('master-container-true');
+      document.getElementsByTagName("HTML")[0].classList.remove('master-container-false');
+    }
   }
   render() {
     const { billList, currentBill, displayBill, displaySmallList } = this.state;
