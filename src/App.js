@@ -83,6 +83,18 @@ class App extends Component {
   }
   render() {
     const { billList, currentBill, displayBill, displaySmallList } = this.state;
+    const options = {
+      type: "basic",
+      title: "test popup with Chrome",
+      message: "You have a payment due!",
+      iconUrl: "Pay-Time.png"
+    }
+    const callback = function () {
+      console.log('popup done!');
+    }
+    chrome.notifications.create(options, callback);
+    console.log(this.state.billList);
+    console.log(test);
     return (
       <div className={`master-container-${displaySmallList}`}>
         <header className="App-header">
@@ -113,7 +125,6 @@ class App extends Component {
             Display Condensed List
           </Button>
         }
-
       </div>
     );
   }
