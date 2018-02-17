@@ -1,8 +1,19 @@
+/* global chrome */
 import React from 'react';
 import { Table, Icon, Checkbox, Button } from 'semantic-ui-react'
+import dateCalc from './utils/client/dateCalc';
 
 const ListBillLarge = (props) => {
   const { billList, deleteBill, updateBillList, toggleBillDisplay } = props;
+  Object.keys(billList).forEach(billKey => {
+    let { freq, specificDate } = billList[billKey];
+    let timeLeft = dateCalc(freq, specificDate);
+    console.log(timeLeft);
+    chrome.storage.sync.set({ [billKey]: { ...billList[billKey], timeLeft } });
+  })
+  chrome.storage.sync.get(null, (data) => {
+    console.log(data);
+  });
   return (
     <div>
       <Table>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import InfiniteCalendar from 'react-infinite-calendar';
+import moment from 'moment';
 import 'react-infinite-calendar/styles.css';
 import { dispOptions } from './utils/client/calendarOptions';
 
@@ -17,7 +18,7 @@ const Calendar = (props) => {
         height={250}
         displayOptions={dispOptions}
         onSelect={date => {
-          setDate(Number(date.toString().slice(8, 11)));
+          setDate(moment(date).format('x'));
         }}
       />
       <Modal.Actions>

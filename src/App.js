@@ -18,6 +18,7 @@ class App extends Component {
         companyOwed: '',
         frequency: '',
         specificDate: 0,
+        timeLeft: 0
       },
       displaySmallList: true,   // if false, will display large list
       displayBill: false,
@@ -36,6 +37,11 @@ class App extends Component {
 
   deleteBill(billKey) {
     chrome.storage.sync.remove(billKey)
+    chrome.storage.sync.get(null, (data) => {
+      console.log('HIT');
+      this.setState({ billList: data })
+      console.log('billList:', this.state.billList);
+    });
     this.setState({
       currentBill: {
         billKey: '',
@@ -83,18 +89,16 @@ class App extends Component {
   }
   render() {
     const { billList, currentBill, displayBill, displaySmallList } = this.state;
-    const options = {
-      type: "basic",
-      title: "test popup with Chrome",
-      message: "You have a payment due!",
-      iconUrl: "Pay-Time.png"
-    }
-    const callback = function () {
-      console.log('popup done!');
-    }
-    chrome.notifications.create(options, callback);
-    console.log(this.state.billList);
-    console.log(test);
+    // const options = {
+    //   type: "basic",
+    //   title: "test popup with Chrome",
+    //   message: "You have a payment due!",
+    //   iconUrl: "Pay-Time.png"
+    // }
+    // const callback = function () {
+    //   console.log('popup done!');
+    // }
+    // chrome.notifications.create(options, callback);
     return (
       <div className={`master-container-${displaySmallList}`}>
         <header className="App-header">
