@@ -38,34 +38,33 @@ class App extends Component {
   deleteBill(billKey) {
     chrome.storage.sync.remove(billKey)
     chrome.storage.sync.get(null, (data) => {
-      console.log('HIT');
-      this.setState({ billList: data })
-      console.log('billList:', this.state.billList);
-    });
-    this.setState({
-      currentBill: {
-        billKey: '',
-        billType: '',
-        companyOwed: '',
-        frequency: '',
-        specificDate: 0,
-      }
+      this.setState({
+        billList: data,
+        currentBill: {
+          billKey: '',
+          billType: '',
+          companyOwed: '',
+          frequency: '',
+          specificDate: 0,
+        }
+      });
     });
   }
+
   updateBillList(billKey) {
     if (billKey) this.deleteBill(billKey);
     chrome.storage.sync.get(null, (data) => {
       console.log('New Data Entry:', data);
-      this.setState({ billList: data })
-    });
-    this.setState({
-      currentBill: {
-        billKey: '',
-        billType: '',
-        companyOwed: '',
-        frequency: '',
-        specificDate: 0,
-      }
+      this.setState({
+        billList: data,
+        currentBill: {
+          billKey: '',
+          billType: '',
+          companyOwed: '',
+          frequency: '',
+          specificDate: 0,
+        }
+      });
     });
   }
   toggleBillDisplay(bill) {
@@ -88,7 +87,55 @@ class App extends Component {
     }
   }
   render() {
-    const { billList, currentBill, displayBill, displaySmallList } = this.state;
+    const {
+      billList,
+      currentBill,
+      displayBill,
+      displaySmallList
+    } = this.state;
+
+    return (
+      <div className={`master-container-${displaySmallList}`}>
+        <header className="App-header">
+          <img src={logo} className="App-logo" />
+          <h1 className="App-title">Welcome to Pay Time</h1>
+        </header>
+        {
+          this.state.displaySmallList &&
+          <ListBillSmall
+            billList={billList}
+            displaySmallList={displaySmallList}
+            toggleListSize={this.toggleListSize}
+            deleteBill={this.deleteBill}
+            toggleBillDisplay={this.toggleBillDisplay}
+            updateBillList={this.updateBillList}
+          />
+        }
+        {
+          !this.state.displaySmallList &&
+          <ListBillLarge
+            billList={billList}
+            displaySmallList={displaySmallList}
+            toggleListSize={this.toggleListSize}
+            deleteBill={this.deleteBill}
+            toggleBillDisplay={this.toggleBillDisplay}
+            updateBillList={this.updateBillList}
+          />
+        }
+        <Bill
+          displayBill={displayBill}
+          currentBill={currentBill}
+          deleteBill={this.deleteBill}
+          toggleBillDisplay={this.toggleBillDisplay}
+          updateBillList={this.updateBillList}
+        />
+      </div>
+    );
+  }
+}
+
+export default App;
+
     // const options = {
     //   type: "basic",
     //   title: "test popup with Chrome",
@@ -99,39 +146,3 @@ class App extends Component {
     //   console.log('popup done!');
     // }
     // chrome.notifications.create(options, callback);
-    return (
-      <div className={`master-container-${displaySmallList}`}>
-        <header className="App-header">
-          <img src={logo} className="App-logo" />
-          <h1 className="App-title">Welcome to Pay Time</h1>
-        </header>
-        {
-          this.state.displaySmallList &&
-          <ListBillSmall billList={billList} deleteBill={this.deleteBill} toggleBillDisplay={this.toggleBillDisplay} updateBillList={this.updateBillList} />
-        }
-        {
-          !this.state.displaySmallList &&
-          <ListBillLarge billList={billList} deleteBill={this.deleteBill} toggleBillDisplay={this.toggleBillDisplay} updateBillList={this.updateBillList} />
-        }
-        <Bill displayBill={displayBill} currentBill={currentBill} deleteBill={this.deleteBill} toggleBillDisplay={this.toggleBillDisplay} updateBillList={this.updateBillList} />
-        <Button color='purple' onClick={() => this.toggleBillDisplay()}>
-          Add Bill Reminder
-        </Button>
-        {
-          this.state.displaySmallList &&
-          <Button color='black' onClick={this.toggleListSize}>
-            Display Detailed List
-          </Button>
-        }
-        {
-          !this.state.displaySmallList &&
-          <Button color='black' onClick={this.toggleListSize}>
-            Display Condensed List
-          </Button>
-        }
-      </div>
-    );
-  }
-}
-
-export default App;

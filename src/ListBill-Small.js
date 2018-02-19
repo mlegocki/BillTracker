@@ -1,19 +1,29 @@
 /* global chrome */
 import React from 'react';
 import { Table, Icon, Checkbox, Button } from 'semantic-ui-react'
-import dateCalc from './utils/client/dateCalc';
+import { timeLeftCalc, dateCalc } from './utils/client/timeCalc';
 
 const ListBillSmall = (props) => {
-  const { billList, deleteBill, updateBillList, toggleBillDisplay } = props;
+  const {
+    billList,
+    displaySmallList,
+    toggleListSize,
+    deleteBill,
+    updateBillList,
+    toggleBillDisplay
+  } = props;
+
+  // UPDATE TIMES
+
   Object.keys(billList).forEach(billKey => {
     let { freq, specificDate } = billList[billKey];
-    let timeLeft = dateCalc(freq, specificDate);
-    console.log(timeLeft);
+    let timeLeft = timeLeftCalc(freq, specificDate);
     chrome.storage.sync.set({ [billKey]: { ...billList[billKey], timeLeft } });
   })
   chrome.storage.sync.get(null, (data) => {
     console.log(data);
   });
+
   return (
     <div>
       <Table>
@@ -26,7 +36,10 @@ const ListBillSmall = (props) => {
               Type of Bill
             </Table.HeaderCell>
             <Table.HeaderCell>
-              Next Due Date
+              Due Date
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Time Left
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -41,13 +54,25 @@ const ListBillSmall = (props) => {
                   {billList[bill].billType}
                 </Table.Cell>
                 <Table.Cell>
-                  {billList[bill].specificDate}
+                  {dateCalc(billList[bill].specificDate)}
+                </Table.Cell>
+                <Table.Cell>
+                  {dateCalc(billList[bill].timeLeft)}
                 </Table.Cell>
               </Table.Row>
             )
           })}
         </Table.Body>
       </Table>
+      <Button color='purple' onClick={() => toggleBillDisplay()}>
+        Add Bill Reminder
+        </Button>
+      {
+        displaySmallList &&
+        <Button color='black' onClick={toggleListSize}>
+          Display Detailed List
+        </Button>
+      }
     </div>
   );
 }

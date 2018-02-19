@@ -18,7 +18,7 @@ const Calendar = (props) => {
         height={250}
         displayOptions={dispOptions}
         onSelect={date => {
-          setDate(moment(date).format('x'));
+          setDate(Number(moment(date).format('x')));
         }}
       />
       <Modal.Actions>
