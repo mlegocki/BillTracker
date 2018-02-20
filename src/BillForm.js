@@ -7,6 +7,7 @@ const BillForm = (props) => {
     companyOwed,
     frequency,
     displaySuccess,
+    displayFailure,
 
     setBillType,
     setCompanyOwed,
@@ -15,7 +16,7 @@ const BillForm = (props) => {
   } = props
 
   return (
-    <Form inverted success={displaySuccess}
+    <Form inverted success={displaySuccess} error={displayFailure}
     >
       <Form.Field required>
         <label>Bill Type (e.g. "Electric")</label>
@@ -27,7 +28,7 @@ const BillForm = (props) => {
         />
       </Form.Field>
       <Form.Field required>
-        <label>Company Owed To</label>
+        <label>Company Owed</label>
         <Input
           placeholder='Enter the company name here...'
           onChange={setCompanyOwed}
@@ -41,10 +42,10 @@ const BillForm = (props) => {
           control={Radio}
           label='Every Month'
           value={frequency}
-          checked={frequency === 'm'}
+          checked={frequency === 'Monthly'}
           onChange={
             () => {
-              setFrequency('m');
+              setFrequency('Monthly');
               toggleCalendar();
             }}
         />
@@ -52,10 +53,10 @@ const BillForm = (props) => {
           control={Radio}
           label='Every Year'
           value={frequency}
-          checked={frequency === 'y'}
+          checked={frequency === 'Annually'}
           onChange={
             () => {
-              setFrequency('y');
+              setFrequency('Annually');
               toggleCalendar();
             }}
         />
@@ -63,10 +64,10 @@ const BillForm = (props) => {
           control={Radio}
           label='Every Week'
           value={frequency}
-          checked={frequency === 'w'}
+          checked={frequency === 'Weekly'}
           onChange={
             () => {
-              setFrequency('w');
+              setFrequency('Weekly');
               toggleCalendar();
             }}
         />
@@ -74,14 +75,26 @@ const BillForm = (props) => {
           control={Radio}
           label='Everyday'
           value={frequency}
-          checked={frequency === 'd'}
-          onChange={() => setFrequency('d')}
+          checked={frequency === 'Daily'}
+          onChange={() => setFrequency('Daily')}
         />
       </Form.Group>
       <Message
         success
         header='Form Completed'
         content="You've successfully added a bill reminder! Add more reminders if you'd like to!"
+      />
+      <Message
+        error
+        header='Form Error'
+        content=
+        {
+            billType.length > 12 || companyOwed.length > 12
+            ?
+            'You need to complete all fields listed above. Please limit your Bill Type and Company Owed to 12 or less characters'
+            :
+            'You need to complete all fields listed above.'
+        }
       />
     </Form>
   );

@@ -4,8 +4,6 @@ import { Button, Modal, Header, Icon, } from 'semantic-ui-react';
 import BillForm from './BillForm';
 import Calendar from './BillCalendar';
 
-// import { setBillType, setCompanyOwed, setFrequency, setDate, toggleCalendar, toggleSuccess, handleSubmit } from './utilsAddBill'
-
 class Bill extends Component {
   constructor() {
     super();
@@ -17,6 +15,7 @@ class Bill extends Component {
       specificDate: 0,
       displayCalendar: false,
       displaySuccess: false,
+      displayFailure: false,
     }
     this.setBillType = this.setBillType.bind(this);
     this.setCompanyOwed = this.setCompanyOwed.bind(this);
@@ -25,6 +24,7 @@ class Bill extends Component {
 
     this.toggleCalendar = this.toggleCalendar.bind(this);
     this.toggleSuccess = this.toggleSuccess.bind(this);
+    this.resetSuccessFailure = this.resetSuccessFailure.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -49,7 +49,13 @@ class Bill extends Component {
     this.state.displayCalendar ? this.setState({ displayCalendar: false }) : this.setState({ displayCalendar: true })
   }
   toggleSuccess() {
-    this.state.displaySuccess ? this.setState({ displaySuccess: false }) : this.setState({ displaySuccess: true })
+    if (!this.state.displaySuccess) this.setState({ displaySuccess: true, displayFailure: false });
+  }
+  toggleFailure() {
+    if (!this.state.displayFailure) this.setState({ displayFailure: true, displaySuccess: false })
+  }
+  resetSuccessFailure() {
+    this.setState({ displaySuccess: false, displayFailure: false })
   }
   handleSubmit() {
     this.setState({
@@ -63,10 +69,9 @@ class Bill extends Component {
 
   render() {
     const { displayBill, setTimeLeft, deleteBill, toggleBillDisplay, updateBillList, currentBill } = this.props;
-    const { billType, companyOwed, frequency, specificDate } = this.state;
+    const { billType, companyOwed, frequency, specificDate, displaySuccess, displayFailure } = this.state;
     const billKey = billType + '_' + companyOwed;
     const formData = { billKey, billType, companyOwed, frequency, specificDate };
-
     return (
       <Modal
         open={displayBill}
@@ -81,43 +86,50 @@ class Bill extends Component {
             billType={billType}
             companyOwed={companyOwed}
             frequency={frequency}
+            displaySuccess={displaySuccess}
+            displayFailure={displayFailure}
 
             setBillType={this.setBillType}
             setCompanyOwed={this.setCompanyOwed}
-            displaySuccess={this.state.displaySuccess}
             toggleCalendar={this.toggleCalendar}
             setFrequency={this.setFrequency}
           />
           {(this.state.displayCalendar) &&
             <Calendar
               displayCalendar={this.state.displayCalendar}
-
               toggleCalendar={this.toggleCalendar}
               setDate={this.setDate}
             />
           }
         </Modal.Content>
         <Modal.Actions>
-          <Button
-            inverted
-            basic color='red'
-            onClick={() => toggleBillDisplay()}
-          >
-            <Icon name='remove' /> Close
-            </Button>
-          <Button
-            inverted
-            color='green'
-            onClick={
-              async () => {
-                await chrome.storage.sync.set({ [billKey]: formData });
-                if (currentBill[Object.keys(currentBill)[0]] !== formData.billKey) await updateBillList(currentBill[Object.keys(currentBill)[0]]);
-                else await updateBillList();
-                this.handleSubmit();
-                this.toggleSuccess();
+            <Button
+              inverted
+              basic color='red'
+              onClick={() => {
+                this.resetSuccessFailure();
+                toggleBillDisplay();
               }}
-          >
-            <Icon name='checkmark' /> Submit
+            >
+              <Icon name='remove' /> Close
+            </Button>
+            <Button
+              inverted
+              color='green'
+              onClick={
+                async () => {
+                  if (!billType.length || billType.length > 12 || companyOwed.length > 12 || !companyOwed.length || !frequency.length || !specificDate) {
+                    this.toggleFailure();
+                  } else {
+                    await chrome.storage.sync.set({ [billKey]: formData });
+                    if (currentBill[Object.keys(currentBill)[0]] !== formData.billKey) await updateBillList(currentBill[Object.keys(currentBill)[0]]);
+                    else await updateBillList();
+                    this.handleSubmit();
+                    this.toggleSuccess();
+                  }
+                }}
+            >
+              <Icon name='checkmark' /> Submit
           </Button>
         </Modal.Actions>
       </Modal >

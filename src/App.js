@@ -90,6 +90,7 @@ class App extends Component {
     if (bill) this.setState({ currentBill: bill });
     this.state.displayBill ? this.setState({ displayBill: false }) : this.setState({ displayBill: true });
   }
+  
   toggleListSize() {
     if (this.state.displaySmallList) {
       this.setState({ displaySmallList: false })

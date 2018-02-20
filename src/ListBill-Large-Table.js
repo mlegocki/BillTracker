@@ -33,11 +33,14 @@ const LargeTable = (props) => {
               Time Left
           </Table.HeaderCell>
             <Table.HeaderCell>
+              Payment Frequency
+          </Table.HeaderCell>
+            <Table.HeaderCell>
               Edit Bill
           </Table.HeaderCell>
             <Table.HeaderCell>
               Delete Bill
-          </Table.HeaderCell>
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -69,6 +72,9 @@ const LargeTable = (props) => {
                     OVERDUE
                   </Table.Cell>
                 }
+                <Table.Cell>
+                  {billList[bill].frequency}
+                </Table.Cell>
                 <Table.Cell>
                   <Button onClick={() => toggleBillDisplay(billList[bill])}>
                     <Icon name='edit' /> Edit
