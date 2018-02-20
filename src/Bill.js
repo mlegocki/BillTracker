@@ -108,14 +108,14 @@ class Bill extends Component {
           <Button
             inverted
             color='green'
-            onClick={() => {
-              chrome.storage.sync.set({ [billKey]: formData });
-              if (currentBill[Object.keys(currentBill)[0]] !== formData.billKey) updateBillList(currentBill[Object.keys(currentBill)[0]]);
-              else updateBillList();
-              setTimeLeft();
-              this.handleSubmit();
-              this.toggleSuccess();
-            }}
+            onClick={
+              async () => {
+                await chrome.storage.sync.set({ [billKey]: formData });
+                if (currentBill[Object.keys(currentBill)[0]] !== formData.billKey) await updateBillList(currentBill[Object.keys(currentBill)[0]]);
+                else await updateBillList();
+                this.handleSubmit();
+                this.toggleSuccess();
+              }}
           >
             <Icon name='checkmark' /> Submit
           </Button>

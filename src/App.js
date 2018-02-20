@@ -31,16 +31,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    chrome.storage.sync.get(null, (data) => {
-      this.setState({ billList: data })
+    chrome.storage.sync.get(null, async (data) => {
+      await this.setState({ billList: data });
+      await this.setTimeLeft();
     });
   }
 
   setTimeLeft() {
-    console.log("SET TIME LEFT FUNCTION")
     const { billList } = this.state;
-    console.log("THIS.STATE.BILLLIST:", this.state.billList);
-    console.log('CURRENT BILL LIST', billList);
     let currentDate = new Date();
     if (Object.keys(billList).length) {
       let updatedBillList = {};
@@ -49,15 +47,14 @@ class App extends Component {
         let timeLeft = specificDate - currentDate.getTime();
         updatedBillList[billKey] = { ...billList[billKey], timeLeft }
       });
-      console.log("UPDATED BILL LIST", updatedBillList)
       this.setState({ billList: updatedBillList });
     }
   }
 
-  deleteBill(billKey) {
-    chrome.storage.sync.remove(billKey)
-    chrome.storage.sync.get(null, (data) => {
-      this.setState({
+  async deleteBill(billKey) {
+    await chrome.storage.sync.remove(billKey)
+    await chrome.storage.sync.get(null, async data => {
+      await this.setState({
         billList: data,
         currentBill: {
           billKey: '',
@@ -67,14 +64,15 @@ class App extends Component {
           specificDate: 0,
         }
       });
+      this.setTimeLeft();
     });
   }
 
   updateBillList(billKey) {
     if (billKey) this.deleteBill(billKey);
-    chrome.storage.sync.get(null, (data) => {
-      console.log('New Data Entry:', data);
-      this.setState({
+    chrome.storage.sync.get(null, async data => {
+      console.log('UPDATED DATA ENTRY:', data);
+      await this.setState({
         billList: data,
         currentBill: {
           billKey: '',
@@ -84,8 +82,10 @@ class App extends Component {
           specificDate: 0,
         }
       });
+      this.setTimeLeft();
     });
   }
+  
   toggleBillDisplay(bill) {
     if (bill) this.setState({ currentBill: bill });
     this.state.displayBill ? this.setState({ displayBill: false }) : this.setState({ displayBill: true });
@@ -136,6 +136,7 @@ class App extends Component {
           <ListBillLarge
             billList={billList}
             displaySmallList={displaySmallList}
+            setTimeLeft={this.setTimeLeft}
             toggleListSize={this.toggleListSize}
             deleteBill={this.deleteBill}
             toggleBillDisplay={this.toggleBillDisplay}
