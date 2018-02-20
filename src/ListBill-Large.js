@@ -15,15 +15,6 @@ const ListBillLarge = (props) => {
 
   // UPDATE TIMES
 
-  Object.keys(billList).forEach(billKey => {
-    let { freq, specificDate } = billList[billKey];
-    let timeLeft = timeLeftCalc(freq, specificDate);
-    chrome.storage.sync.set({ [billKey]: { ...billList[billKey], timeLeft } });
-  })
-  chrome.storage.sync.get(null, (data) => {
-    console.log(data);
-  });
-
   return (
     <div>
       <Table>

@@ -1,8 +1,19 @@
+/* global chrome */
 import moment from 'moment';
+
+export const updateTime = function (billList) {
+  console.log(billList, 'UPDATE TIME CALC');
+  Object.keys(billList).forEach(billKey => {
+    let { freq, specificDate } = billList[billKey];
+    let timeLeft = timeLeftCalc(freq, specificDate);
+    chrome.storage.sync.set({ [billKey]: { ...billList[billKey], timeLeft } });
+  })
+  console.log("HIT");
+}
 
 export const timeLeftCalc = function (freq, specificDate) {
   let currentDate = new Date();   // in milliseconds
-  return Math.floor((specificDate - currentDate.getTime()) / 86400000);
+  return specificDate - currentDate.getTime();
 }
 
 export const dateCalc = function (specificDate) {

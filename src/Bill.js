@@ -62,7 +62,7 @@ class Bill extends Component {
   }
 
   render() {
-    const { displayBill, deleteBill, toggleBillDisplay, updateBillList, currentBill } = this.props;
+    const { displayBill, setTimeLeft, deleteBill, toggleBillDisplay, updateBillList, currentBill } = this.props;
     const { billType, companyOwed, frequency, specificDate } = this.state;
     const billKey = billType + '_' + companyOwed;
     const formData = { billKey, billType, companyOwed, frequency, specificDate };
@@ -112,6 +112,7 @@ class Bill extends Component {
               chrome.storage.sync.set({ [billKey]: formData });
               if (currentBill[Object.keys(currentBill)[0]] !== formData.billKey) updateBillList(currentBill[Object.keys(currentBill)[0]]);
               else updateBillList();
+              setTimeLeft();
               this.handleSubmit();
               this.toggleSuccess();
             }}

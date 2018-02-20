@@ -23,6 +23,7 @@ class App extends Component {
       displaySmallList: true,   // if false, will display large list
       displayBill: false,
     }
+    this.setTimeLeft = this.setTimeLeft.bind(this);
     this.deleteBill = this.deleteBill.bind(this);
     this.updateBillList = this.updateBillList.bind(this);
     this.toggleBillDisplay = this.toggleBillDisplay.bind(this);
@@ -33,6 +34,24 @@ class App extends Component {
     chrome.storage.sync.get(null, (data) => {
       this.setState({ billList: data })
     });
+  }
+
+  setTimeLeft() {
+    console.log("SET TIME LEFT FUNCTION")
+    const { billList } = this.state;
+    console.log("THIS.STATE.BILLLIST:", this.state.billList);
+    console.log('CURRENT BILL LIST', billList);
+    let currentDate = new Date();
+    if (Object.keys(billList).length) {
+      let updatedBillList = {};
+      Object.keys(billList).forEach(billKey => {
+        let { specificDate } = billList[billKey];
+        let timeLeft = specificDate - currentDate.getTime();
+        updatedBillList[billKey] = { ...billList[billKey], timeLeft }
+      });
+      console.log("UPDATED BILL LIST", updatedBillList)
+      this.setState({ billList: updatedBillList });
+    }
   }
 
   deleteBill(billKey) {
@@ -105,6 +124,7 @@ class App extends Component {
           <ListBillSmall
             billList={billList}
             displaySmallList={displaySmallList}
+            setTimeLeft={this.setTimeLeft}
             toggleListSize={this.toggleListSize}
             deleteBill={this.deleteBill}
             toggleBillDisplay={this.toggleBillDisplay}
@@ -125,6 +145,7 @@ class App extends Component {
         <Bill
           displayBill={displayBill}
           currentBill={currentBill}
+          setTimeLeft={this.setTimeLeft}
           deleteBill={this.deleteBill}
           toggleBillDisplay={this.toggleBillDisplay}
           updateBillList={this.updateBillList}
