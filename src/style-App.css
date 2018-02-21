@@ -1,0 +1,47 @@
+.master-container-true, .master-container-false {
+  text-align: center;
+}
+
+.app-header-container{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #222222;
+  height: 75px;
+  color: white;
+}
+
+.app-logo {
+  animation: logo-spin infinite 15s linear;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.app-title {
+  font-size: 1em;
+}
+
+.app-button-container {
+  margin-right: auto;
+}
+
+button#app-button-add-bill.ui.basic.button {
+  font-size: 0.5em;
+  background: rgb(41, 223, 136) !important;
+  background-color: rgb(41, 223, 136) !important;
+}
+
+button#app-button-display-list.ui.basic.button.ui.basic.buttons.button  {
+  font-size: 0.5em;
+  background: white !important;
+  background-color: white !important;
+}
+
+button.ui.basic.button {
+  color: black;
+}
+
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

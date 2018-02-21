@@ -24,12 +24,6 @@ class ListBillSmall extends Component {
         <SmallTable
           billList={billList}
         />
-        {
-          displaySmallList &&
-          <Button color='black' onClick={toggleListSize}>
-            Display Detailed List
-          </Button>
-        }
       </div>
     );
   }

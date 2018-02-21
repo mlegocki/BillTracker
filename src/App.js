@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
 import logo from './Pay-Time.png';
-import './App.css';
+import './style-App.css';
 import Bill from './Bill';
 import ListBillSmall from './ListBill-Small';
 import ListBillLarge from './ListBill-Large';
@@ -85,12 +85,12 @@ class App extends Component {
       this.setTimeLeft();
     });
   }
-  
+
   toggleBillDisplay(bill) {
     if (bill) this.setState({ currentBill: bill });
     this.state.displayBill ? this.setState({ displayBill: false }) : this.setState({ displayBill: true });
   }
-  
+
   toggleListSize() {
     if (this.state.displaySmallList) {
       this.setState({ displaySmallList: false })
@@ -116,10 +116,29 @@ class App extends Component {
 
     return (
       <div className={`master-container-${displaySmallList}`}>
-        <header className="App-header">
-          <img src={logo} className="App-logo" />
-          <h1 className="App-title">Welcome to Pay Time</h1>
-        </header>
+        <div className='app-header-container'>
+          <img src={logo} className="app-logo" />
+          <h1 className='app-title'>Welcome to Pay Time</h1>
+          {
+            !displaySmallList &&
+            <div className='app-button-container'>
+              <Button basic id='app-button-add-bill' onClick={() => this.toggleBillDisplay()}>
+                Add Bill Reminder
+              </Button>
+              <Button basic id='app-button-display-list' onClick={this.toggleListSize}>
+                Display Condensed List
+              </Button>
+            </div>
+          }
+          {
+            displaySmallList &&
+            <div className='app-button-container'>
+              <Button basic id='app-button-display-list' onClick={this.toggleListSize}>
+                Display Detailed List
+              </Button>
+            </div>
+          }
+        </div>
         {
           this.state.displaySmallList &&
           <ListBillSmall

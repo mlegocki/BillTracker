@@ -13,7 +13,7 @@ class ListBillLarge extends Component {
   }
 
   render() {
-    
+
     const {
       billList,
       displaySmallList,
@@ -29,15 +29,6 @@ class ListBillLarge extends Component {
           deleteBill={deleteBill}
           toggleBillDisplay={toggleBillDisplay}
         />
-        <Button color='purple' onClick={() => toggleBillDisplay()}>
-          Add Bill Reminder
-        </Button>
-        {
-          !displaySmallList &&
-          <Button color='black' onClick={toggleListSize}>
-            Display Condensed List
-          </Button>
-        }
       </div>
     );
   }
