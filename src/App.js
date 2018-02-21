@@ -118,7 +118,7 @@ class App extends Component {
       <div className={`master-container-${displaySmallList}`}>
         <div className='app-header-container'>
           <img src={logo} className="app-logo" />
-          <h1 className='app-title'>Welcome to Pay Time</h1>
+          <h1 className='app-title'>Pay Time</h1>
           {
             !displaySmallList &&
             <div className='app-button-container'>
