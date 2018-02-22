@@ -26,6 +26,7 @@
 .app-button-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 button#app-button-add-bill.ui.basic.button {
@@ -46,6 +47,7 @@ button#app-button-display-list.ui.basic.button {
   color: white !important;
   width: 180px;
   margin-right: 15px;
+  margin-left: 15px;
 }
 
 @keyframes logo-spin {

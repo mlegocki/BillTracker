@@ -1,6 +1,6 @@
 /* global chrome */
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react'
+import { Popup, Button, Icon } from 'semantic-ui-react'
 import logo from './Pay-Time.png';
 import './style-App.css';
 import Bill from './Bill';
@@ -133,6 +133,12 @@ class App extends Component {
           {
             displaySmallList &&
             <div className='app-button-container'>
+              <Popup
+                id='app-button-help'
+                trigger={<Icon size={'big'} name='question circle outline' />}
+                content={"Click on the 'Display Detailed List' button to get started!"}
+                on='hover'
+              />
               <Button basic id='app-button-display-list' onClick={this.toggleListSize}>
                 Display Detailed List
               </Button>

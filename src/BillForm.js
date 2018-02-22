@@ -91,7 +91,7 @@ const BillForm = (props) => {
         {
             billType.length > 12 || companyOwed.length > 12
             ?
-            'You need to complete all fields listed above. Please limit your Bill Type and Company Owed to 12 or less characters'
+            "You need to complete all fields listed above. Please limit your 'Bill Type' and 'Company Owed' to 12 or less characters"
             :
             'You need to complete all fields listed above.'
         }

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Table, Icon, Checkbox } from 'semantic-ui-react';
 import { dateCalc } from './utils/client/timeCalc';
 
-
 class ListBillSmall extends Component {
   constructor() {
     super()
@@ -18,7 +17,7 @@ class ListBillSmall extends Component {
 
     return (
       <div>
-        <Table singleLine collapsing striped celled textAlign={'center'}>
+        <Table singleLine striped celled textAlign={'center'}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell className='small-table-header-label'>
@@ -39,25 +38,25 @@ class ListBillSmall extends Component {
             {billList && Object.keys(billList).map(bill => {
               return (
                 <Table.Row>
-                  <Table.Cell collapsing>
+                  <Table.Cell collapsing className='small-table-row-entry'>
                     <Checkbox slider />
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell className='small-table-row-entry'>
                     {billList[bill].billType}
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell className='small-table-row-entry'>
                     {dateCalc(billList[bill].specificDate)}
                   </Table.Cell>
                   {
                     billList[bill].timeLeft > 0 &&
-                    <Table.Cell>
+                    <Table.Cell className='small-table-row-entry'>
                       {Math.floor(billList[bill].timeLeft / 86400000) + ' Days, '}
                       {Math.round((billList[bill].timeLeft - (Math.floor(billList[bill].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'}
                     </Table.Cell>
                   }
                   {
                     billList[bill].timeLeft < 0 &&
-                    <Table.Cell>
+                    <Table.Cell className='small-table-row-entry'>
                       OVERDUE
                   </Table.Cell>
                   }

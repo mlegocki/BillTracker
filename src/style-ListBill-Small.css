@@ -1,6 +1,7 @@
-.ui.table thead th.small-table-header-label { 
-  font-size: 0.1em;
+table.ui thead tr th.small-table-header-label {
+  font-size: 1.2em;
 }
 
-@media only screen and (max-width: 767px) {
+table.ui tbody tr td.small-table-row-entry {
+  font-size: 0.85em;
 }

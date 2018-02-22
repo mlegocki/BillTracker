@@ -17,7 +17,7 @@ export const timeLeftCalc = function (freq, specificDate) {
 }
 
 export const dateCalc = function (specificDate) {
-  return moment(specificDate, 'x').format('MMMM-Do');
+  return moment(specificDate, 'x').format('MMM-Do');
 }
 
 // 31556952000 ms = 1 year

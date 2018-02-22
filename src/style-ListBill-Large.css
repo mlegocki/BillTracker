@@ -1,3 +1,37 @@
 .ui.table thead th.large-table-header-label { 
-  font-size: 1.2em;
+  font-size: 1em;
+}
+
+
+table.ui tbody tr td.large-table-row-entry {
+  font-size: 0.9em;
+}
+
+table.ui tbody tr td.large-table-row-entry-med {
+  font-size: 0.85em;
+}
+
+table.ui tbody tr td.large-table-row-entry-long {
+  font-size: 0.75em;
+}
+
+button#large-table-edit-button.ui.button, button#large-table-delete-button.ui.button {
+  display: flex;
+  justify-content: center;
+  background: black !important;
+  color: white !important;
+  width: 45px;
+}
+
+.large-table-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+#large-table-delete-button {
+  margin: 0;
+}
+
+i.icon:before { 
+  margin-left: 7.5px;
 }
