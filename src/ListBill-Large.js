@@ -54,47 +54,37 @@ class ListBillLarge extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {billList && Object.keys(billList).map(bill => {
+            {billList && Object.keys(billList).map(billKey => {
               return (
                 <Table.Row textAlign={'center'}>
                   <Table.Cell collapsing className='large-table-row-entry'>
                     <Checkbox slider
                       onClick={
-                        async () => { 
-                          await togglePaid(bill);
+                        async () => {
+                          await togglePaid(billList[billKey]);
                           await updateBillList();
                         }
                       }
                     />
                   </Table.Cell>
                   <Table.Cell className='large-table-row-entry-med'>
-                    {billList[bill].billType}
+                    {billList[billKey].billType}
                   </Table.Cell>
                   <Table.Cell className='large-table-row-entry-med'>
-                    {billList[bill].companyOwed}
+                    {billList[billKey].companyOwed}
                   </Table.Cell>
                   <Table.Cell className='large-table-row-entry'>
-                    {dateDueCalc(billList[bill].specificDate)}
+                    {dateDueCalc(billList[billKey].specificDate)}
                   </Table.Cell>
-                  {
-                    billList[bill].timeLeft > 0 &&
-                    <Table.Cell className='large-table-row-entry-long'>
-                      {Math.floor(billList[bill].timeLeft / 86400000) + ' Days, '}
-                      {Math.round((billList[bill].timeLeft - (Math.floor(billList[bill].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'}
-                    </Table.Cell>
-                  }
-                  {
-                    billList[bill].timeLeft < 0 &&
-                    <Table.Cell className='large-table-row-entry-long'>
-                      OVERDUE
-                    </Table.Cell>
-                  }
+                  <Table.Cell className='large-table-row-entry-long'>
+                    {billList[billKey].timeLeft}
+                  </Table.Cell>
                   <Table.Cell className='large-table-row-entry'>
-                    {billList[bill].frequency}
+                    {billList[billKey].frequency}
                   </Table.Cell>
                   <Table.Cell textAlign={'center'} className='large-table-row-entry'>
                     <div className='large-table-button-container'>
-                      <Button id='large-table-edit-button' onClick={() => toggleBillDisplay(billList[bill])}>
+                      <Button id='large-table-edit-button' onClick={() => toggleBillDisplay(billList[billKey])}>
                         <Icon name='edit' />
                       </Button>
                     </div>
@@ -102,7 +92,7 @@ class ListBillLarge extends Component {
                   <Table.Cell textAlign={'center'} className='large-table-row-entry'>
                     <div className='large-table-button-container'>
                       <Button id='large-table-delete-button' onClick={() => {
-                        deleteBill(bill);
+                        deleteBill(billKey);
                       }}
                       >
                         <Icon name='delete calendar' />

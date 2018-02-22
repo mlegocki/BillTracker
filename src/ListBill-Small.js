@@ -35,27 +35,27 @@ class ListBillSmall extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {billList && Object.keys(billList).map(bill => {
+            {billList && Object.keys(billList).map(billKey => {
               return (
                 <Table.Row>
                   <Table.Cell collapsing className='small-table-row-entry'>
                     <Checkbox slider />
                   </Table.Cell>
                   <Table.Cell className='small-table-row-entry'>
-                    {billList[bill].billType}
+                    {billList[billKey].billType}
                   </Table.Cell>
                   <Table.Cell className='small-table-row-entry'>
-                    {dateDueCalc(billList[bill].specificDate)}
+                    {dateDueCalc(billList[billKey].specificDate)}
                   </Table.Cell>
                   {
-                    billList[bill].timeLeft > 0 &&
+                    billList[billKey].timeLeft > 0 &&
                     <Table.Cell className='small-table-row-entry'>
-                      {Math.floor(billList[bill].timeLeft / 86400000) + ' Days, '}
-                      {Math.round((billList[bill].timeLeft - (Math.floor(billList[bill].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'}
+                      {Math.floor(billList[billKey].timeLeft / 86400000) + ' Days, '}
+                      {Math.round((billList[billKey].timeLeft - (Math.floor(billList[billKey].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'}
                     </Table.Cell>
                   }
                   {
-                    billList[bill].timeLeft < 0 &&
+                    billList[billKey].timeLeft < 0 &&
                     <Table.Cell className='small-table-row-entry'>
                       OVERDUE
                   </Table.Cell>

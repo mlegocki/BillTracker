@@ -1,12 +1,13 @@
 /* global chrome */
 import React, { Component } from 'react';
 import { Popup, Button, Icon } from 'semantic-ui-react'
+import moment from 'moment'
 import logo from './Pay-Time.png';
 import './style-App.css';
+import { updateDueCalc } from './utils/client/timeCalc';
 import Bill from './Bill';
 import ListBillSmall from './ListBill-Small';
 import ListBillLarge from './ListBill-Large';
-import moment from 'moment'
 
 class App extends Component {
   constructor() {
@@ -45,8 +46,19 @@ class App extends Component {
     if (Object.keys(billList).length) {
       let updatedBillList = {};
       Object.keys(billList).forEach(billKey => {
-        let { specificDate } = billList[billKey];
+        let { specificDate, frequency } = billList[billKey];
         let timeLeft = specificDate - currentDate.getTime();
+        console.log(timeLeft);
+        console.log(billList[billKey].paid);
+        if (timeLeft < 0 && billList[billKey].paid) {
+          console.log("HIT IF:")
+          timeLeft = updateDueCalc(specificDate, frequency);
+          console.log("RESULT TIMELEFT:", timeLeft)
+        } else if (timeLeft < 0 && !billList[billKey].paid) {
+          console.log("HIT ELSE:")
+          timeLeft = 'OVERDUE'
+          console.log("RESULT TIMELEFT:", timeLeft)
+        }
         updatedBillList[billKey] = { ...billList[billKey], timeLeft }
       });
       this.setState({ billList: updatedBillList });
@@ -94,7 +106,6 @@ class App extends Component {
 
   togglePaid(bill) {
     bill.paid = bill.paid ? false : true;
-    console.log('TOGGLEPAID FUNCTION:', { [bill.billKey]: bill });
     chrome.storage.sync.set({ [bill.billKey]: bill });
   }
 
