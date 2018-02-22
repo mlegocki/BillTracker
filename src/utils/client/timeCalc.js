@@ -1,23 +1,35 @@
 /* global chrome */
 import moment from 'moment';
 
-export const updateTime = function (billList) {
-  console.log(billList, 'UPDATE TIME CALC');
-  Object.keys(billList).forEach(billKey => {
-    let { freq, specificDate } = billList[billKey];
-    let timeLeft = timeLeftCalc(freq, specificDate);
-    chrome.storage.sync.set({ [billKey]: { ...billList[billKey], timeLeft } });
-  })
-  console.log("HIT");
-}
-
-export const timeLeftCalc = function (freq, specificDate) {
-  let currentDate = new Date();   // in milliseconds
-  return specificDate - currentDate.getTime();
-}
-
-export const dateCalc = function (specificDate) {
+export const dateDueCalc = function (specificDate) {
   return moment(specificDate, 'x').format('MMM-Do');
+}
+
+export const updateDueCalc = function (specificDate, frequency) {
+  switch (frequency) {
+    case 'Monthly':
+      let dueDateMonth = Number(moment(specificDate).format('MM'));
+      let dueDateDay = Number(moment(specificDate).format('DD'));
+      if (dueDateMonth === 12) dueDateMonth = 1;
+      else dueDateMonth += 1;
+      return Number(moment(specificDate).format('x'));
+
+    case 'Annually':
+      specificDate += 86400000 * 365;
+      return specificDate;
+
+    case 'Weekly':
+      specificDate += 86400000 * 7;
+      return specificDate;
+
+    case 'Daily':
+      specificDate += 86400000 * 7;
+      return specificDate;
+  }
+}
+
+export const dayOfMonthCalc = function (specificDate) {
+  return moment(specificDate, 'x').format('DD');
 }
 
 // 31556952000 ms = 1 year

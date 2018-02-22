@@ -1,7 +1,7 @@
 /* global chrome */
 import React, { Component } from 'react';
 import { Table, Icon, Checkbox } from 'semantic-ui-react';
-import { dateCalc } from './utils/client/timeCalc';
+import { dateDueCalc } from './utils/client/timeCalc';
 
 class ListBillSmall extends Component {
   constructor() {
@@ -45,7 +45,7 @@ class ListBillSmall extends Component {
                     {billList[bill].billType}
                   </Table.Cell>
                   <Table.Cell className='small-table-row-entry'>
-                    {dateCalc(billList[bill].specificDate)}
+                    {dateDueCalc(billList[bill].specificDate)}
                   </Table.Cell>
                   {
                     billList[bill].timeLeft > 0 &&

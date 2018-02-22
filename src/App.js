@@ -6,6 +6,7 @@ import './style-App.css';
 import Bill from './Bill';
 import ListBillSmall from './ListBill-Small';
 import ListBillLarge from './ListBill-Large';
+import moment from 'moment'
 
 class App extends Component {
   constructor() {
