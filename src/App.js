@@ -18,6 +18,7 @@ class App extends Component {
         billType: '',
         companyOwed: '',
         frequency: '',
+        paid: false,
         specificDate: 0,
         timeLeft: 0
       },
@@ -62,7 +63,9 @@ class App extends Component {
           billType: '',
           companyOwed: '',
           frequency: '',
+          paid: false,
           specificDate: 0,
+          timeLeft: 0,
         }
       });
       this.setTimeLeft();
@@ -80,11 +83,19 @@ class App extends Component {
           billType: '',
           companyOwed: '',
           frequency: '',
+          paid: false,
           specificDate: 0,
+          timeLeft: 0,
         }
       });
       this.setTimeLeft();
     });
+  }
+
+  togglePaid(bill) {
+    bill.paid = bill.paid ? false : true;
+    console.log('TOGGLEPAID FUNCTION:', { [bill.billKey]: bill });
+    chrome.storage.sync.set({ [bill.billKey]: bill });
   }
 
   toggleBillDisplay(bill) {
@@ -164,6 +175,7 @@ class App extends Component {
             billList={billList}
             displaySmallList={displaySmallList}
             setTimeLeft={this.setTimeLeft}
+            togglePaid={this.togglePaid}
             toggleListSize={this.toggleListSize}
             deleteBill={this.deleteBill}
             toggleBillDisplay={this.toggleBillDisplay}

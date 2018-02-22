@@ -12,7 +12,9 @@ class Bill extends Component {
       billType: '',
       companyOwed: '',
       frequency: '',
+      paid: false,
       specificDate: 0,
+      timeLeft: 0,
       displayCalendar: false,
       displaySuccess: false,
       displayFailure: false,
@@ -63,7 +65,9 @@ class Bill extends Component {
       billType: '',
       companyOwed: '',
       frequency: '',
+      paid: false,
       specificDate: 0,
+      timeLeft: 0,
     });
   }
 

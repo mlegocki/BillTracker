@@ -17,7 +17,9 @@ class ListBillLarge extends Component {
     const {
       billList,
       deleteBill,
-      toggleBillDisplay
+      togglePaid,
+      toggleBillDisplay,
+      updateBillList
     } = this.props;
 
     return (
@@ -56,7 +58,14 @@ class ListBillLarge extends Component {
               return (
                 <Table.Row textAlign={'center'}>
                   <Table.Cell collapsing className='large-table-row-entry'>
-                    <Checkbox slider />
+                    <Checkbox slider
+                      onClick={
+                        async () => { 
+                          await togglePaid(bill);
+                          await updateBillList();
+                        }
+                      }
+                    />
                   </Table.Cell>
                   <Table.Cell className='large-table-row-entry-med'>
                     {billList[bill].billType}
