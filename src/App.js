@@ -40,28 +40,32 @@ class App extends Component {
     });
   }
 
-  setTimeLeft() {
+  async setTimeLeft() {
     const { billList } = this.state;
     let currentDate = new Date();
     if (Object.keys(billList).length) {
       let updatedBillList = {};
-      Object.keys(billList).forEach(billKey => {
+      Object.keys(billList).forEach(async billKey => {
         let { specificDate, frequency } = billList[billKey];
         let timeLeft = specificDate - currentDate.getTime();
-        console.log(timeLeft);
-        console.log(billList[billKey].paid);
         if (timeLeft < 0 && billList[billKey].paid) {
-          console.log("HIT IF:")
-          timeLeft = updateDueCalc(specificDate, frequency);
-          console.log("RESULT TIMELEFT:", timeLeft)
+          let updatedSpecificDate = updateDueCalc(specificDate, frequency);
+          let updatedTimeLeft = updatedSpecificDate - currentDate.getTime();
+          updatedBillList[billKey] = {
+            ...billList[billKey],
+            timeLeft: updatedTimeLeft,
+            specificDate: updatedSpecificDate,
+            paid: false
+          }
         } else if (timeLeft < 0 && !billList[billKey].paid) {
-          console.log("HIT ELSE:")
           timeLeft = 'OVERDUE'
-          console.log("RESULT TIMELEFT:", timeLeft)
+          updatedBillList[billKey] = { ...billList[billKey], timeLeft }
+        } else {
+          updatedBillList[billKey] = { ...billList[billKey], timeLeft }
         }
-        updatedBillList[billKey] = { ...billList[billKey], timeLeft }
       });
       this.setState({ billList: updatedBillList });
+      await chrome.storage.sync.set(updatedBillList);
     }
   }
 
@@ -104,9 +108,9 @@ class App extends Component {
     });
   }
 
-  togglePaid(bill) {
+  async togglePaid(bill) {
     bill.paid = bill.paid ? false : true;
-    chrome.storage.sync.set({ [bill.billKey]: bill });
+    await chrome.storage.sync.set({ [bill.billKey]: bill });
   }
 
   toggleBillDisplay(bill) {
@@ -174,6 +178,7 @@ class App extends Component {
             billList={billList}
             displaySmallList={displaySmallList}
             setTimeLeft={this.setTimeLeft}
+            togglePaid={this.togglePaid}
             toggleListSize={this.toggleListSize}
             deleteBill={this.deleteBill}
             toggleBillDisplay={this.toggleBillDisplay}

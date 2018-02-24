@@ -2,21 +2,23 @@
 import moment from 'moment';
 
 export const dateDueCalc = function (specificDate) {
+  console.log("SPECIFIC DATE DATEDUECALC:", specificDate)
   return moment(specificDate, 'x').format('MMM-Do');
 }
 
 export const updateDueCalc = function (specificDate, frequency) {
-  console.log('hit')
-  console.log('inputs:', specificDate, frequency)
   switch (frequency) {
     case 'Monthly':
-    console.log("HIT MONTHLY");
+      let dueDateYear = Number(moment(specificDate).format('YYYY'));
       let dueDateMonth = Number(moment(specificDate).format('MM'));
       let dueDateDay = Number(moment(specificDate).format('DD'));
-      if (dueDateMonth === 12) dueDateMonth = 1;
+      if (dueDateMonth === 12) {
+        dueDateYear += 1;
+        dueDateMonth = 1;
+      }
       else dueDateMonth += 1;
-      console.log('returned date:', Number(moment(specificDate).format('x')));
-      return Number(moment(specificDate).format('x'));
+      let updatedSpecificDate = Number(moment(dueDateMonth + '-' + dueDateDay + '-' + dueDateYear).format('x'));
+      return Number(moment(updatedSpecificDate).format('x'));
 
     case 'Annually':
       specificDate += 86400000 * 365;

@@ -73,9 +73,9 @@ class Bill extends Component {
 
   render() {
     const { displayBill, setTimeLeft, deleteBill, toggleBillDisplay, updateBillList, currentBill } = this.props;
-    const { billType, companyOwed, frequency, specificDate, displaySuccess, displayFailure } = this.state;
+    const { billType, companyOwed, frequency, paid, specificDate, displaySuccess, displayFailure } = this.state;
     const billKey = billType + '_' + companyOwed;
-    const formData = { billKey, billType, companyOwed, frequency, specificDate };
+    const formData = { billKey, billType, companyOwed, frequency, paid, specificDate };
     return (
       <Modal
         open={displayBill}

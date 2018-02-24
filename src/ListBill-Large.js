@@ -59,6 +59,7 @@ class ListBillLarge extends Component {
                 <Table.Row textAlign={'center'}>
                   <Table.Cell collapsing className='large-table-row-entry'>
                     <Checkbox slider
+                      checked={billList[billKey].paid}
                       onClick={
                         async () => {
                           await togglePaid(billList[billKey]);
@@ -77,7 +78,15 @@ class ListBillLarge extends Component {
                     {dateDueCalc(billList[billKey].specificDate)}
                   </Table.Cell>
                   <Table.Cell className='large-table-row-entry-long'>
-                    {billList[billKey].timeLeft}
+                    {
+                      typeof billList[billKey].timeLeft === 'number' &&
+                      Math.floor(billList[billKey].timeLeft / 86400000) + ' Days, ' +
+                      Math.round((billList[billKey].timeLeft - (Math.floor(billList[billKey].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'
+                    }
+                    {
+                      typeof billList[billKey].timeLeft === 'string' &&
+                      billList[billKey].timeLeft
+                    }
                   </Table.Cell>
                   <Table.Cell className='large-table-row-entry'>
                     {billList[billKey].frequency}

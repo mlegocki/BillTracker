@@ -13,8 +13,11 @@ class ListBillSmall extends Component {
   }
 
   render() {
-    const { billList } = this.props;
-
+    const {
+      billList,
+      togglePaid,
+      updateBillList
+    } = this.props;
     return (
       <div>
         <Table singleLine striped celled textAlign={'center'}>
@@ -39,7 +42,15 @@ class ListBillSmall extends Component {
               return (
                 <Table.Row>
                   <Table.Cell collapsing className='small-table-row-entry'>
-                    <Checkbox slider />
+                    <Checkbox slider
+                      checked={billList[billKey].paid}
+                      onClick={
+                        async () => {
+                          await togglePaid(billList[billKey]);
+                          await updateBillList();
+                        }
+                      }
+                    />
                   </Table.Cell>
                   <Table.Cell className='small-table-row-entry'>
                     {billList[billKey].billType}
@@ -47,19 +58,17 @@ class ListBillSmall extends Component {
                   <Table.Cell className='small-table-row-entry'>
                     {dateDueCalc(billList[billKey].specificDate)}
                   </Table.Cell>
-                  {
-                    billList[billKey].timeLeft > 0 &&
-                    <Table.Cell className='small-table-row-entry'>
-                      {Math.floor(billList[billKey].timeLeft / 86400000) + ' Days, '}
-                      {Math.round((billList[billKey].timeLeft - (Math.floor(billList[billKey].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'}
-                    </Table.Cell>
-                  }
-                  {
-                    billList[billKey].timeLeft < 0 &&
-                    <Table.Cell className='small-table-row-entry'>
-                      OVERDUE
+                  <Table.Cell className='small-table-row-entry'>
+                    {
+                      typeof billList[billKey].timeLeft === 'number' &&
+                      Math.floor(billList[billKey].timeLeft / 86400000) + ' Days, ' +
+                      Math.round((billList[billKey].timeLeft - (Math.floor(billList[billKey].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'
+                    }
+                    {
+                      typeof billList[billKey].timeLeft === 'string' &&
+                      billList[billKey].timeLeft
+                    }
                   </Table.Cell>
-                  }
                 </Table.Row>
               )
             })}
