@@ -71,13 +71,6 @@ const BillForm = (props) => {
               toggleCalendar();
             }}
         />
-        <Form.Field
-          control={Radio}
-          label='Everyday'
-          value={frequency}
-          checked={frequency === 'Daily'}
-          onChange={() => setFrequency('Daily')}
-        />
       </Form.Group>
       <Message
         success
@@ -89,7 +82,7 @@ const BillForm = (props) => {
         header='Form Error'
         content=
         {
-            billType.length > 12 || companyOwed.length > 12
+          billType.length > 12 || companyOwed.length > 12
             ?
             "You need to complete all fields listed above. Please limit your 'Bill Type' and 'Company Owed' to 12 or less characters"
             :

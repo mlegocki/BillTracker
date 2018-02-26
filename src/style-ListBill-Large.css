@@ -15,6 +15,11 @@ table.ui tbody tr td.large-table-row-entry-long {
   font-size: 0.75em;
 }
 
+table.ui tbody tr td.large-table-row-entry-long-overdue {
+  font-size: 0.75em;
+  color: red;
+}
+
 button#large-table-edit-button.ui.button, button#large-table-delete-button.ui.button {
   display: flex;
   justify-content: center;

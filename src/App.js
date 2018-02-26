@@ -23,11 +23,13 @@ class App extends Component {
         specificDate: 0,
         timeLeft: 0
       },
+      displayPaid: false,
       displaySmallList: true,   // if false, will display large list
       displayBill: false,
     }
     this.setTimeLeft = this.setTimeLeft.bind(this);
     this.deleteBill = this.deleteBill.bind(this);
+    this.togglePaid = this.togglePaid.bind(this);
     this.updateBillList = this.updateBillList.bind(this);
     this.toggleBillDisplay = this.toggleBillDisplay.bind(this);
     this.toggleListSize = this.toggleListSize.bind(this);
@@ -111,6 +113,8 @@ class App extends Component {
   async togglePaid(bill) {
     bill.paid = bill.paid ? false : true;
     await chrome.storage.sync.set({ [bill.billKey]: bill });
+    this.setState({ displayPaid: true })
+    setTimeout(() => { this.setState({ displayPaid: false }) }, 2500)
   }
 
   toggleBillDisplay(bill) {
@@ -137,15 +141,27 @@ class App extends Component {
     const {
       billList,
       currentBill,
+      displayPaid,
       displayBill,
       displaySmallList
     } = this.state;
 
+    console.log(displayPaid);
     return (
       <div className={`master-container-${displaySmallList}`}>
         <div className='app-header-container'>
           <img src={logo} className="app-logo" />
           <h1 className='app-title'>Pay Time</h1>
+          {
+            displayPaid &&
+
+            <Popup
+              className={'app-payment-update'}
+              content='Payment noted! Bill due date updated'
+              basic
+              open={true}
+            />
+          }
           {
             !displaySmallList &&
             <div className='app-button-container'>

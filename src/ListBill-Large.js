@@ -1,6 +1,6 @@
 /* global chrome */
 import React, { Component } from 'react';
-import { Table, Icon, Checkbox, Button } from 'semantic-ui-react'
+import { Popup, Table, Icon, Checkbox, Button } from 'semantic-ui-react'
 import { dateDueCalc } from './utils/client/timeCalc';
 
 class ListBillLarge extends Component {
@@ -77,17 +77,23 @@ class ListBillLarge extends Component {
                   <Table.Cell className='large-table-row-entry'>
                     {dateDueCalc(billList[billKey].specificDate)}
                   </Table.Cell>
-                  <Table.Cell className='large-table-row-entry-long'>
-                    {
-                      typeof billList[billKey].timeLeft === 'number' &&
-                      Math.floor(billList[billKey].timeLeft / 86400000) + ' Days, ' +
-                      Math.round((billList[billKey].timeLeft - (Math.floor(billList[billKey].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'
-                    }
-                    {
-                      typeof billList[billKey].timeLeft === 'string' &&
-                      billList[billKey].timeLeft
-                    }
-                  </Table.Cell>
+                  {
+                    typeof billList[billKey].timeLeft === 'number' &&
+                    <Table.Cell className='large-table-row-entry-long'>
+                      {
+                        Math.floor(billList[billKey].timeLeft / 86400000) + ' Days, ' +
+                        Math.round((billList[billKey].timeLeft - (Math.floor(billList[billKey].timeLeft / 86400000) * 24 * 3600000)) / 3600000) + ' Hours'
+                      }
+                    </Table.Cell>
+                  }
+                  {
+                    typeof billList[billKey].timeLeft === 'string' &&
+                    <Table.Cell className='large-table-row-entry-long-overdue'>
+                      {
+                        billList[billKey].timeLeft
+                      }
+                    </Table.Cell>
+                  }
                   <Table.Cell className='large-table-row-entry'>
                     {billList[billKey].frequency}
                   </Table.Cell>

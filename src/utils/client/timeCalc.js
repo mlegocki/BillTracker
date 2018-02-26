@@ -2,7 +2,6 @@
 import moment from 'moment';
 
 export const dateDueCalc = function (specificDate) {
-  console.log("SPECIFIC DATE DATEDUECALC:", specificDate)
   return moment(specificDate, 'x').format('MMM-Do');
 }
 
@@ -27,18 +26,5 @@ export const updateDueCalc = function (specificDate, frequency) {
     case 'Weekly':
       specificDate += 86400000 * 7;
       return specificDate;
-
-    case 'Daily':
-      specificDate += 86400000 * 7;
-      return specificDate;
   }
 }
-
-export const dayOfMonthCalc = function (specificDate) {
-  return moment(specificDate, 'x').format('DD');
-}
-
-// 31556952000 ms = 1 year
-// 2629746000 ms = 1 month
-// 604800000 ms = 1 week
-// 86400000 ms = 1 day

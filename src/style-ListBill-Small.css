@@ -5,3 +5,8 @@ table.ui thead tr th.small-table-header-label {
 table.ui tbody tr td.small-table-row-entry {
   font-size: 0.85em;
 }
+
+table.ui tbody tr td.small-table-row-entry-overdue {
+  font-size: 0.85em;
+  color: red;
+}
